@@ -3,14 +3,23 @@ DLUT本科毕业设计——基于深度学习的艺术风格转化应用（Art 
 
 ## 平台参数
 Python	3.4.5
+
 Anaconda3	4.2.0-Linux-x86_64
+
 TensorFlow-GPU	1.4.0
+
 Tensorboard	0.4.0
+
 Numpy	1.14.2
+
 Django	2.0.4
+
 Scipy	1.0.1
+
 CUDA	7.5.17
+
 Cudnn	6.0.21
+
 Scikit-image	0.13.1
 
 ## 主要参考论文列表（Paper References）：
