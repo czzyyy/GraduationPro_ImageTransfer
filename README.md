@@ -3,7 +3,6 @@ DLUT本科毕业设计——基于深度学习的艺术风格转化应用
 
 # 主要参考论文列表：
 1.《Image Style Transfer Using Convolutional Neural Networks》
-
 2.《A Neural Algorithm of Artistic Style》
 3.《Deep Photo Style Transfer》
 4.《Texture Networks，Feed-forward Synthesis of Textures and Stylized Images》
