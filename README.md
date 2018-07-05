@@ -1,6 +1,6 @@
 # GraduationPro_ImageTransfer
 DLUT本科毕业设计——基于深度学习的艺术风格转化应用（Art style transfer application based on deep learning）
-![Image text](https://github.com/czzyyy/GraduationPro_ImageTransfer/blob/master/image_transfer_algorithm/fast_art/result/eightchicago.png)
+![Image text](https:)
 ## 平台参数
 Python	3.4.5
 
