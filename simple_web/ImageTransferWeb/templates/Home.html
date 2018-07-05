@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+{% load static %}
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>图像风格转换</title>
+    <meta name="description" content="">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="shortcut icon" href="/static/image/web/favicon.ico">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/templatemo-style.css' %}">
+
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/demo.css' %}" />-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+
+    <script src="{% static 'js/jquery-2.1.3.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'js/modernizr-2.8.3-respond-1.4.2.min.js' %}"></script>
+</head>
+<body>
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+<nav class="nav">
+    <div class="burger">
+        <div class="burger__patty"></div>
+    </div>
+
+    <ul class="nav__list">
+        <li class="nav__item">
+            <a href="#1" class="nav__link c-blue"><img src="{% static 'image/web/home-icon.png' %}" alt=""></a>
+        </li>
+        <li class="nav__item">
+            <a href="#2" class="nav__link c-yellow scrolly"><img src="{% static 'image/web/project-icon.png' %}" alt=""></a>
+        </li>
+        <li class="nav__item">
+            <a href="#3" class="nav__link c-red"><img src="{% static 'image/web/diy-icon.png' %}" alt=""></a>
+        </li>
+        <li class="nav__item">
+            <a href="#4" class="nav__link c-green"><img src="{% static 'image/web/share-icon.png' %}" alt=""></a>
+        </li>
+    </ul>
+</nav>
+
+<section class="panel b-blue" id="1">
+    <article class="panel__wrapper">
+        <div class="panel__content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="home-content">
+                            <div class="home-heading">
+                                <h1><em>图像风格转换</em>深度学习应用</h1>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="home-box-content">
+                                        <div class="left-text">
+                                            <h4>"Style Transfer"<em>算法原理简介</em></h4>
+                                            <p>
+                                                一种艺术风格转移的神经网络算法，利用用于图像识别优化的卷积神经网络，导出相应的图像表示，使得高层次的图像信息更加明确，算法可以分离和重组自然图像的图像内容和图像风格，最终能够生成高质感的新图像，将任意图像的内容和艺术作品的风格相结合。
+                                            </p>
+                                            <div class="run-button">
+                                                <a href="/static/pdf/A Neural Algorithm of Artistic Style.pdf" download="style.pdf">下载相关论文PDF</a>
+                                            </div>
+                                        </div>
+                                        <div class="right-image">
+                                            <img src="{% static 'image/web/right-home-image.png' %}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+<!--<div class="copyrights">Collect from <a href="http://www.baidu.com/" >百度搜索</a></div>-->
+<section class="panel b-yellow" id="2">
+    <article class="panel__wrapper">
+        <div class="panel__content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="online-content">
+                            <div class="heading">
+                                <h4>在线风格转换</h4>
+                            </div>
+                            <div class="row">
+                                <div class="online-box-success">
+                                    <img class="img-thumbnail" id="success-img" title="返回的图片" src="{% static 'image/web/default.png' %}"/>
+                                    <button class="success-download" title="下载到本地" onclick="DownloadShare(1)">下载到本地</button>
+                                    <button class="success-back" title="返回">返回</button>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="online-box-content">
+                                        <input type="file" id="btn-file" style="display:none">
+                                        <img id="user-img" title="点击上传图片" src="{% static 'image/web/default.png' %}" onclick="OpenFile(0)"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-7 col-md-offset-5">
+                                    <div class="online-box-styles">
+                                        <div class="before">
+                                            <h4>风格选择</h4>
+                                            <ul id="accordion" class="accordion">
+                                                <li>
+                                                    <div class="link"><i><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span></i>绘画风格<i class="fa fa-chevron-down"></i></div>
+                                                    <ul class="submenu">
+                                                        <li><a href="#" id="art/landscape-2.jpg" class="choose">landscape-2</a></li>
+                                                        <li><a href="#" id="art/the_shipwreck_of_the_minotaur.jpg" class="choose">the_shipwreck_of_the_minotaur</a></li>
+                                                        <li><a href="#" id="art/The_Starry_Night.jpg" class="choose">The_Starry_Night</a></li>
+                                                        <li><a href="#" id="art/wave.jpg" class="choose">wave</a></li>
+                                                        <li><a href="#" id="art/semi-nude-with-colored-skirt-and-raised-arms-1911.jpg" class="choose">semi-nude</a></li>
+                                                        <li><a href="#" id="art/young-woman-with-a-bouquet-of-roses.jpg" class="choose">young-woman-with-rose</a></li>
+                                                        <li><a href="#" id="art/untitled-5.jpg" class="choose">untitled-5</a></li>
+                                                        <li><a href="#" id="art/quintais-de-lisboa-1956.jpg" class="choose">quintais-de-lisboa-1956</a></li>
+                                                        <li><a href="#" id="art/erin-hanson-cedar-breaks-color-50x70.jpg" class="choose">erin-hanson-cedar-breaks-color</a></li>
+                                                        <li><a href="#" id="art/impression-sunrise.jpg" class="choose">impression-sunrise</a></li>
+                                                        <li><a href="#" id="art/rain_princess.jpg" class="choose">rain_princess</a></li>
+                                                        <li><a href="#" id="art/the_scream.jpg" class="choose">the_scream</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <div class="link"><i><span class="glyphicon glyphicon-send" aria-hidden="true"></span></i>现实风格<i class="fa fa-chevron-down"></i></div>
+                                                    <ul class="submenu">
+                                                        <li><a href="#" id="real/bright_indoor.png" class="choose">明亮家居</a></li>
+                                                        <li><a href="#" id="real/light_street.png" class="choose">繁华街道</a></li>
+                                                        <li><a href="#" id="real/sky.jpg" class="choose">绚丽天空</a></li>
+                                                        <li><a href="#" id="real/road_house.png" class="choose">梦幻小屋</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="online-box-show">
+                                        <div class="after">
+                                            <h4 id="style_name">风格图片</h4>
+                                            <img class="choose-img" id="choose-img" src="{% static 'image/style/art/unknown1.jpg' %}">
+                                            <div class="run-button">
+                                                <a data-toggle="tooltip" data-placement="bottom" title="点击按钮开始生成" onclick="StartTransfer()">风格转化</a>
+                                                <a data-toggle="tooltip" data-placement="bottom" title="返回" id="show-back" style="float: right;">返回</a>
+                                            </div>
+                                        </div>
+                                        <div class="my-progress-bar">
+                                            <div id="my-pro" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 4%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+
+<section class="panel b-green" id="3">
+    <article class="panel__wrapper">
+        <div class="panel__content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="diy-content">
+                            <div class="heading">
+                                <h4>自定义风格转换</h4>
+                            </div>
+                            <div class="row">
+                                <div class="email-form">
+                                    <p>请填写邮件信息</p>
+                                    <form id="contact" action="" method="post">
+                                        <fieldset>
+                                            <input name="name" type="text" class="form-control" id="name" placeholder="Your Name" required="">
+                                        </fieldset>
+                                        <fieldset>
+                                            <input name="email" type="email" class="form-control" id="email" placeholder="Email" required="">
+                                        </fieldset>
+                                        <!--
+                                        <fieldset>
+                                            <textarea name="message" rows="6" class="form-control" id="message" placeholder="Message" required=""></textarea>
+                                        </fieldset>
+                                        -->
+                                        <fieldset>
+                                            <button type="submit" id="form-submit" class="btn" onclick="SendEmail()">发送，并进行DIY处理</button>
+                                            <button type="button" id="form-cancel" class="btn" onclick="CancelEmail()">取消</button>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div class="style-detail">
+                                    <p>请选择风格类型</p>
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="art" value="1" checked>艺术风格
+                                    </label>
+                                    <label class="l-two">
+                                        <input type="radio" name="optionsRadios" id="real" value="2">现实风格
+                                    </label>
+                                    <button type="button" id="style-detail-ok" class="btn" onclick="StyleDetail()">确定</button>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="diy-user">
+                                        <p>DIY原图</p>
+                                        <input type="file" id="btn-diy-user-file" style="display:none">
+                                        <img id="diy-user-img" title="点击上传原图" src="{% static 'image/web/default.png' %}" onclick="OpenFile(1)">
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="diy-style">
+                                        <p>DIY风格图</p>
+                                        <input type="file" id="btn-diy-style-file" style="display:none">
+                                        <img id="diy-style-img" title="点击上传风格图" src="{% static 'image/web/default.png' %}" onclick="OpenFile(2)">
+                                    </div>
+                                    <div class="open-form">
+                                        <button class="btn" id="open-email-form" title="点击填写邮箱信息" onclick="OpenEmail()">填写邮箱信息</button>
+                                        <p>算法结束之后，以邮件方式返回结果.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+
+<section class="panel b-red" id="4">
+    <article class="panel__wrapper">
+        <div class="panel__content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="share-content">
+                            <div class="heading">
+                                <h4>图片分享</h4>
+                            </div>
+                            <div class="show-img">
+                                <div class="my-container">
+                                    <!--
+                                    <div style="text-align:center;clear:both;">
+                                        <script src="/gg_bd_ad_720x90.js" type="text/javascript"></script>
+                                        <script src="/follow.js" type="text/javascript"></script>
+                                    </div>
+                                    -->
+
+                                    <section id="dg-container" class="dg-container">
+                                        <div class="dg-wrapper">
+                                            <a href="#" class="dg-center" style="opacity: 1; visibility: visible;"><img src="{% static 'image/show/onechicago.png' %}" alt=""></a>
+                                            <a href="#" style="opacity: 1; visibility: visible; transform: translateX(150px) translateZ(-200px) rotateY(-45deg);"><img src="{% static 'image/show/fivechicago.png' %}" alt=""></a>
+                                            {% for a_img in show_imgs %}
+                                            <a href="#" style="opacity: 0; visibility: hidden;"><img src={{ a_img }} alt=""></a>
+                                            {% endfor %}
+                                           <a href="#" style="opacity: 1; visibility: visible; transform: translateX(-150px) translateZ(-200px) rotateY(45deg);"><img src="{% static 'image/show/eightchicago.png' %}" alt=""></a>
+                                       </div>
+                                       <nav>
+                                           <span class="dg-prev">&lt;</span>
+                                           <span class="dg-next">&gt;</span>
+                                       </nav>
+                                   </section>
+                               </div>
+                           </div>
+                           <div class="col-md-5">
+                               <div class="upload-yours">
+                                   <input type="file" id="btn-upload" style="display:none">
+                                   <button title="点击按钮上传" onclick="UploadShare()">上传图片</button>
+                               </div>
+                           </div>
+                           <div class="col-md-5">
+                               <div class="download-others">
+                                   <button title="点击按钮下载" onclick="DownloadShare(0)">下载图片</button>
+                               </div>
+                           </div>
+
+                           <!--<div class="row">
+                               <div class="col-md-12">
+                                   <div class="owl-carousel owl-theme projects-container">
+                                       <div>
+                                           <div class="project-item">
+                                               <a href="{% static 'image/web/project-item-01.jpg' %}" data-lightbox="image-1"><img src="{% static 'image/web/project-item-01.jpg' %}" alt=""></a>
+                                               <div class="text-content">
+                                                   <h4>Best Design</h4>
+                                                   <p>Lorem ipsum dolor, adipis scing elit etiam ante vehicula, aliquam mauris in, luctus neque.</p>
+                                                   <div class="primary-button">
+                                                       <a href="#">Discover More</a>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div>
+                                           <div class="project-item">
+                                               <a href="{% static 'image/web/project-item-02.jpg' %}" data-lightbox="image-1"><img src="{% static 'image/web/project-item-02.jpg' %}" alt=""></a>
+                                               <div class="text-content">
+                                                   <h4>Creative Pen</h4>
+                                                   <p>Lorem ipsum dolor, adipis scing elit etiam ante vehicula, aliquam mauris in, luctus neque.</p>
+                                                   <div class="primary-button">
+                                                       <a href="#">Discover More</a>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div>
+                                           <div class="project-item">
+                                               <a href="{% static 'image/web/project-item-03.jpg' %}" data-lightbox="image-1"><img src="{% static 'image/web/project-item-03.jpg' %}" alt=""></a>
+                                               <div class="text-content">
+                                                   <h4>Nice Capture</h4>
+                                                   <p>Lorem ipsum dolor, adipis scing elit etiam ante vehicula, aliquam mauris in, luctus neque.</p>
+                                                   <div class="primary-button">
+                                                       <a href="#">Discover More</a>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div>
+                                           <div class="project-item">
+                                               <a href="{% static 'image/web/project-item-04.jpg' %}" data-lightbox="image-1"><img src="{% static 'image/web/project-item-04.jpg' %}" alt=""></a>
+                                               <div class="text-content">
+                                                   <h4>This Moment</h4>
+                                                   <p>Lorem ipsum dolor sit amet, adipis scing elit etiam sit amet ante vehicula, aliquam mauris in, luctus neque.</p>
+                                                   <div class="primary-button">
+                                                       <a href="#">Discover More</a>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div>
+                                           <div class="project-item">
+                                               <a href="{% static 'image/web/project-item-05.jpg' %}" data-lightbox="image-1"><img src="{% static 'image/web/project-item-05.jpg' %}" alt=""></a>
+                                               <div class="text-content">
+                                                   <h4>Artwork</h4>
+                                                   <p>Lorem ipsum dolor, adipis scing elit etiam ante vehicula, aliquam mauris in, luctus neque.</p>
+                                                   <div class="primary-button">
+                                                       <a href="#">Discover More</a>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div>
+                                           <div class="project-item">
+                                               <a href="{% static 'image/web/project-item-06.jpg' %}" data-lightbox="image-1"><img src="{% static 'image/web/project-item-06.jpg' %}" alt=""></a>
+                                               <div class="text-content">
+                                                   <h4>Item Sixth</h4>
+                                                   <p>Lorem ipsum dolor, adipis scing elit etiam ante vehicula, aliquam mauris in, luctus neque.</p>
+                                                   <div class="primary-button">
+                                                       <a href="#">Discover More</a>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div>
+                                           <div class="project-item">
+                                               <a href="{% static 'image/web/project-item-07.jpg' %}" data-lightbox="image-1"><img src="{% static 'image/web/project-item-07.jpg' %}" alt=""></a>
+                                               <div class="text-content">
+                                                   <h4>Last Item</h4>
+                                                   <p>Lorem ipsum dolor, adipis scing elit etiam ante vehicula, aliquam mauris in, luctus neque.</p>
+                                                   <div class="primary-button">
+                                                       <a href="#">Discover More</a>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="footer">
+                        <p>Copyright &copy; 2017 czy
+                            | More Knowledge <a href="http://www.baidu.com/" target="_blank" title="baidu">百度搜索</a> - Collect from <a href="http://www.baidu.com/" title="baidu" target="_blank">百度搜索</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+
+
+<script src="{% static 'js/jquery-2.1.3.min.js' %}"></script>
+<script>window.jQuery || document.write('<script src="{% static 'js/jquery-2.1.3.min.js' %}"><\/script>')</script>
+
+<script src="{% static 'js/plugins.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/modernizr.custom.53451.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.gallery.js' %}"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#dg-container').gallery();
+	});
+</script>
+
+</body>
+</html>
